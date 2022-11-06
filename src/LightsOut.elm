@@ -48,7 +48,7 @@ type Msg = Elapsed Time.Posix
     | Divide
     | RStart {x: Float, y: Float}
     | RMove {x: Float, y: Float}
-    | REnd {x: Float, y: Float}
+    | REnd {x: Float, y: Float} Int
     | RDbl Int
     | Random
     | Toggle (List Int)
@@ -137,16 +137,24 @@ update  msg model =
                              Nothing -> model.vertices
              }
             , Cmd.none)
-        REnd pos ->
+        REnd pos idx ->
             let
                 dummy = Debug.log "REnd" pos
+                newModel = case model.start of
+                               Just start ->
+                                   if pos == start then
+                                       switch idx model
+                                   else
+                                       {model | start = Nothing}
+                               Nothing ->
+                                   model
             in
-            ({model | start = Nothing}, Cmd.none)
+                (newModel, Cmd.none)
         RDbl idx ->
             let
                 dummy = Debug.log "RDbl" idx
             in
-            (switch idx model, Cmd.none)
+                (switch idx model, Cmd.none)
         Random ->
             let
                 gen = Random.list (2*(List.length model.faces)) (Random.int 0 ((List.length model.faces)-1))
@@ -490,7 +498,7 @@ view model =
                         , eyePoint = Point3d.meters 0 7 0
                         , upDirection = Direction3d.positiveZ
                         }
-                , verticalFieldOfView = Angle.degrees 30
+                , verticalFieldOfView = Angle.degrees 20
                 }
         myOnDbl : (Pointer.Event -> msg) -> Html.Attribute msg
         myOnDbl =
@@ -500,12 +508,12 @@ view model =
 
     in
     Html.div[Pointer.onDown (\ev-> RStart (relativePosition ev))
-            ,Pointer.onUp (\ev-> REnd (relativePosition ev))
+            ,Pointer.onUp (\ev-> REnd (relativePosition ev) frontIdx)
             ,Pointer.onMove (\ev-> RMove (relativePosition ev))
             ,Mouse.onDoubleClick (\ev -> RDbl frontIdx)
             ,Attrs.style "touch-action" "none"
             ]
-        [ Html.div []
+        [ Html.div [Attrs.style "touch-action" "none"]
               [
                Html.button [Evts.onClick Divide][
                     Html.text "divide"
@@ -517,7 +525,7 @@ view model =
         , Scene3d.sunny
              { camera = camera
              , clipDepth = Length.meters 0.05
-             , dimensions = ( Pixels.int 800, Pixels.int 800 )
+             , dimensions = ( Pixels.int 600, Pixels.int 600 )
              , background = Scene3d.transparentBackground
              --, entities = spheres ++ edges ++ facesView
              , entities = edges ++ facesView

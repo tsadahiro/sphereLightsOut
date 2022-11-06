@@ -8559,12 +8559,20 @@ var $author$project$LightsOut$update = F2(
 					$elm$core$Platform$Cmd$none);
 			case 'REnd':
 				var pos = msg.a;
+				var idx = msg.b;
+				var newModel = function () {
+					var _v4 = model.start;
+					if (_v4.$ === 'Just') {
+						var start = _v4.a;
+						return _Utils_eq(pos, start) ? A2($author$project$LightsOut$switch, idx, model) : _Utils_update(
+							model,
+							{start: $elm$core$Maybe$Nothing});
+					} else {
+						return model;
+					}
+				}();
 				var dummy = A2($elm$core$Debug$log, 'REnd', pos);
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{start: $elm$core$Maybe$Nothing}),
-					$elm$core$Platform$Cmd$none);
+				return _Utils_Tuple2(newModel, $elm$core$Platform$Cmd$none);
 			case 'RDbl':
 				var idx = msg.a;
 				var dummy = A2($elm$core$Debug$log, 'RDbl', idx);
@@ -8593,9 +8601,10 @@ var $author$project$LightsOut$Divide = {$: 'Divide'};
 var $author$project$LightsOut$RDbl = function (a) {
 	return {$: 'RDbl', a: a};
 };
-var $author$project$LightsOut$REnd = function (a) {
-	return {$: 'REnd', a: a};
-};
+var $author$project$LightsOut$REnd = F2(
+	function (a, b) {
+		return {$: 'REnd', a: a, b: b};
+	});
 var $author$project$LightsOut$RMove = function (a) {
 	return {$: 'RMove', a: a};
 };
@@ -13631,7 +13640,7 @@ var $author$project$LightsOut$view = function (model) {
 		});
 	var camera = $ianmackenzie$elm_3d_camera$Camera3d$perspective(
 		{
-			verticalFieldOfView: $ianmackenzie$elm_units$Angle$degrees(30),
+			verticalFieldOfView: $ianmackenzie$elm_units$Angle$degrees(20),
 			viewpoint: $ianmackenzie$elm_3d_camera$Viewpoint3d$lookAt(
 				{
 					eyePoint: A3($ianmackenzie$elm_geometry$Point3d$meters, 0, 7, 0),
@@ -13677,8 +13686,10 @@ var $author$project$LightsOut$view = function (model) {
 				}),
 				$mpizenberg$elm_pointer_events$Html$Events$Extra$Pointer$onUp(
 				function (ev) {
-					return $author$project$LightsOut$REnd(
-						$author$project$LightsOut$relativePosition(ev));
+					return A2(
+						$author$project$LightsOut$REnd,
+						$author$project$LightsOut$relativePosition(ev),
+						frontIdx);
 				}),
 				$mpizenberg$elm_pointer_events$Html$Events$Extra$Pointer$onMove(
 				function (ev) {
@@ -13695,7 +13706,10 @@ var $author$project$LightsOut$view = function (model) {
 			[
 				A2(
 				$elm$html$Html$div,
-				_List_Nil,
+				_List_fromArray(
+					[
+						A2($elm$html$Html$Attributes$style, 'touch-action', 'none')
+					]),
 				_List_fromArray(
 					[
 						A2(
@@ -13725,8 +13739,8 @@ var $author$project$LightsOut$view = function (model) {
 					camera: camera,
 					clipDepth: $ianmackenzie$elm_units$Length$meters(0.05),
 					dimensions: _Utils_Tuple2(
-						$ianmackenzie$elm_units$Pixels$int(800),
-						$ianmackenzie$elm_units$Pixels$int(800)),
+						$ianmackenzie$elm_units$Pixels$int(600),
+						$ianmackenzie$elm_units$Pixels$int(600)),
 					entities: _Utils_ap(edges, facesView),
 					shadows: true,
 					sunlightDirection: $ianmackenzie$elm_geometry$Direction3d$xy(
