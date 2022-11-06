@@ -12155,6 +12155,8 @@ var $ianmackenzie$elm_geometry$Cylinder3d$startingAt = F3(
 				radius: $ianmackenzie$elm_units$Quantity$abs(_arguments.radius)
 			});
 	});
+var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $ianmackenzie$elm_3d_scene$Scene3d$Light$CastsShadows = function (a) {
 	return {$: 'CastsShadows', a: a};
 };
@@ -12197,8 +12199,6 @@ var $elm_explorations$webgl$WebGL$Internal$Stencil = function (a) {
 	return {$: 'Stencil', a: a};
 };
 var $elm_explorations$webgl$WebGL$stencil = $elm_explorations$webgl$WebGL$Internal$Stencil;
-var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
-var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$core$String$concat = function (strings) {
 	return A2($elm$core$String$join, '', strings);
 };
@@ -13688,7 +13688,8 @@ var $author$project$LightsOut$view = function (model) {
 				$mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onDoubleClick(
 				function (ev) {
 					return $author$project$LightsOut$RDbl(frontIdx);
-				})
+				}),
+				A2($elm$html$Html$Attributes$style, 'touch-action', 'none')
 			]),
 		_List_fromArray(
 			[

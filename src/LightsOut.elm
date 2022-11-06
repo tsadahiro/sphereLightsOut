@@ -503,6 +503,7 @@ view model =
             ,Pointer.onUp (\ev-> REnd (relativePosition ev))
             ,Pointer.onMove (\ev-> RMove (relativePosition ev))
             ,Mouse.onDoubleClick (\ev -> RDbl frontIdx)
+            ,Attrs.style "touch-action" "none"
             ]
         [ Html.div []
               [
