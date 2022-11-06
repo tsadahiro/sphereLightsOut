@@ -511,7 +511,7 @@ view model =
                     Html.text "divide"
                     ]
               ,Html.button [Evts.onClick Random][
-                    Html.text "start"
+                    Html.text "shuffle"
                     ]
               ]
         , Scene3d.sunny
