@@ -8412,7 +8412,7 @@ var $author$project$LightsOut$switch = F2(
 			model.on);
 		return _Utils_update(
 			model,
-			{on: onOff});
+			{on: onOff, start: $elm$core$Maybe$Nothing});
 	});
 var $ianmackenzie$elm_geometry$Geometry$Types$Direction3d = function (a) {
 	return {$: 'Direction3d', a: a};
@@ -13716,7 +13716,8 @@ var $author$project$LightsOut$view = function (model) {
 						$elm$html$Html$button,
 						_List_fromArray(
 							[
-								$elm$html$Html$Events$onClick($author$project$LightsOut$Divide)
+								$elm$html$Html$Events$onClick($author$project$LightsOut$Divide),
+								A2($elm$html$Html$Attributes$style, 'font-size', '30px')
 							]),
 						_List_fromArray(
 							[
@@ -13726,7 +13727,8 @@ var $author$project$LightsOut$view = function (model) {
 						$elm$html$Html$button,
 						_List_fromArray(
 							[
-								$elm$html$Html$Events$onClick($author$project$LightsOut$Random)
+								$elm$html$Html$Events$onClick($author$project$LightsOut$Random),
+								A2($elm$html$Html$Attributes$style, 'font-size', '30px')
 							]),
 						_List_fromArray(
 							[

@@ -178,7 +178,7 @@ switch i model =
                                                 on
                                 ) model.on
     in
-        {model | on = onOff}
+        {model | on = onOff, start=Nothing}
 
 faceCenter: List Int -> List (Point3d.Point3d Length.Meters WorldCoordinates) -> Point3d.Point3d Length.Meters WorldCoordinates
 faceCenter face vertices =
@@ -515,10 +515,12 @@ view model =
             ]
         [ Html.div [Attrs.style "touch-action" "none"]
               [
-               Html.button [Evts.onClick Divide][
+               Html.button [Evts.onClick Divide
+                           ,Attrs.style "font-size" "30px"][
                     Html.text "divide"
                     ]
-              ,Html.button [Evts.onClick Random][
+              ,Html.button [Evts.onClick Random
+                           ,Attrs.style "font-size" "30px"][
                     Html.text "shuffle"
                     ]
               ]
